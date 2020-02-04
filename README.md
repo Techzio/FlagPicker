@@ -1,3 +1,9 @@
+Key Notes:
+
+After finishing Step 1, select the continent, touch outside the continent text box outside to
+get the second option of Step 2, select the country.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
