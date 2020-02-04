@@ -5,7 +5,7 @@ const initialState = {
       showcontinentComponent: false,
       showflagComponent:false,
       selectedcontinent: "",
-      selectedcountry: ""
+      selectedcountry: []
     };
 
 class Search extends Component {
@@ -17,7 +17,7 @@ class Search extends Component {
       showcontinentComponent: true,
       showflagComponent:false,
       selectedcontinent: "",
-      selectedcountry: ""
+      selectedcountry: []
     };
 
     }
@@ -26,8 +26,9 @@ class Search extends Component {
       return (
           <div>
             {this.state.showcontinentComponent ?
-              <RenderContinent flags = {this.props.flags} onchangecontinent={this.onchangecontinent.bind(this)}/>:null}
-            {this.state.selectedcontinent ?
+              <RenderContinent flags = {this.props.flags} onchangecontinent={this.onchangecontinent.bind(this)}
+               onkeypress={this.onkeypress.bind(this)}/>:null}
+            {this.state.showcountryComponent ?
                     <RenderCountry flags = {this.props.flags} selectedcontinent = {this.state.selectedcontinent}
                     onchangecountry={this.onchangecountry.bind(this)}
                    /> :
@@ -37,6 +38,7 @@ class Search extends Component {
             <RenderFlag  flags = {this.props.flags} selectedcountry = {this.state.selectedcountry}
             selectedcontinent = {this.state.selectedcontinent}
             onclearflag={this.onclearflag.bind(this)}/> : null
+            
             }
           </div>
       );
@@ -47,15 +49,19 @@ class Search extends Component {
             selectedcontinent:{value}});
     }
     onchangecountry(value){
+        var concatarray = this.state.selectedcountry.concat(value);
         this.setState({showflagComponent:true,
-            selectedcountry:{value}});
+            selectedcountry:concatarray});
     }
     onclearflag(){
                 this.setState({showcountryComponent: false,
-      showcontinentComponent: true,
+      showcontinentComponent: false,
       showflagComponent:false,
       selectedcontinent: "",
-      selectedcountry: ""});
+      selectedcountry: []},() => this.setState({showcontinentComponent: true}));
+    }
+    onkeypress(){
+        console.log("i am on onkeypress");
     }
 }
 function RenderContinent(props)
@@ -65,7 +71,9 @@ function RenderContinent(props)
     )})
     return(
         <div class="continent">
-        <input type="text" name="continent" list="continentname" onChange={(event)=>props.onchangecontinent(event.target.value)}/>
+        <h1>Step1</h1>
+        <p>Select a continent</p>
+        <input class="inputclass" type="text" name="continent" list="continentname" onChange={(event)=>props.onchangecontinent(event.target.value)} onKeyPress={(event)=>props.onkeypress(event.target.value)}/>
         <datalist id="continentname">
         {continent}
         </datalist>
@@ -76,29 +84,36 @@ function RenderContinent(props)
 function RenderCountry(props)
 {
    const flag = props.flags.filter((flag) => flag.continent === props.selectedcontinent.value)
+    if(flag[0]){
    const countries = flag[0].countries.map((country,index)=>{return(
-        <option value={country.name} key={index}/>
+        <label><input class="check" type = "checkbox" key={index} name={country.name} onClick={(event)=>props.onchangecountry(event.target.name)}/>{country.name}<br/></label>
     )})
     return(
             <div class="country">
-            <input type="text" name="country" list="countryname" onChange={(event)=>props.onchangecountry(event.target.value)}/>
-            <datalist id="countryname">
+            <h1>Step2</h1>
+            <p>Now, Select a Country</p>
             {countries}
-            </datalist> 
             </div>
     );
 }
+}
 function RenderFlag(props)
 {
-   const flag = props.flags.filter((flag) => flag.continent === props.selectedcontinent.value)
-   const country = flag[0].countries.filter((country) => country.name === props.selectedcountry.value)
-   console.log(country[0].flag);
+   console.log(props);
+   const flag = props.flags.filter((flag) => flag.continent === props.selectedcontinent.value)  
+   const countryflag = props.selectedcountry.map((selectedcountry)=>{
+   const country = flag[0].countries.filter((country) => country.name === selectedcountry)
     return(
-            <div class="flag"> 
+            <div>
             {country[0].flag}
-            <button class="center" onClick = {()=>props.onclearflag()}>Clear Flag</button>
             </div>
-    );
+    )})
+   return(
+       <div class="flag">
+       {countryflag}
+       <button onClick = {()=>props.onclearflag()}>Clear Flag</button>
+       </div>
+   );
     
 }
 

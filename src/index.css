@@ -10,24 +10,36 @@ body {
 .continent
 {
     margin-left: 200px;
-    margin-top: 200px;
+    margin-top: 100px;
 }
 .country
 {
     margin-left: 500px;
-    margin-top:-38px;
+    margin-top:-158px;
 }
 .flag
 {
-    margin-left: 900px;
-    margin-top:-38px;
+    margin:auto;
+    margin-left: 800px;
+    margin-top:-125px;
+    font-size: 50px;
 }
 .center{
-    align: center;
+    text-align: center;
 }
-input{
+.check{
+    vertical-align: super;
+}
+.inputclass{
     width: 250px;
     height:30px;
+}
+button{
+    position: absolute;
+    top: 200px;
+    right: 100px;
+    width: 150px;
+    height: 30px;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

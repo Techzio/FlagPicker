@@ -13,8 +13,12 @@ class App extends Component {
     }
     render()
     {
-      return (   
+      return (
+          <div>
+          <h2 class="App">Flag Picker</h2>
+          <p class="App">This app will help you to learn flags around the world in <u>3 steps</u></p>
           <Search flags = {this.state.flags}/>
+          </div>
       );
     }
 }
