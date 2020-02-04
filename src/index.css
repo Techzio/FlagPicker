@@ -21,7 +21,7 @@ body {
 {
     margin:auto;
     margin-left: 800px;
-    margin-top:-125px;
+    margin-top:-220px;
     font-size: 50px;
 }
 .center{
@@ -36,8 +36,8 @@ body {
 }
 button{
     position: absolute;
-    top: 200px;
-    right: 100px;
+    top: 230px;
+    right: 150px;
     width: 150px;
     height: 30px;
 }

@@ -45,6 +45,7 @@ class Search extends Component {
     }
     
     onchangecontinent(value){
+            console.log("i am onchangecontinent");
         this.setState({showcountryComponent:true,
             selectedcontinent:{value}});
     }
@@ -73,7 +74,7 @@ function RenderContinent(props)
         <div class="continent">
         <h1>Step1</h1>
         <p>Select a continent</p>
-        <input class="inputclass" type="text" name="continent" list="continentname" onChange={(event)=>props.onchangecontinent(event.target.value)} onKeyPress={(event)=>props.onkeypress(event.target.value)}/>
+        <input class="inputclass" type="text" name="continent" list="continentname" onBlur={(event)=>props.onchangecontinent(event.target.value)} onKeyPress={(event)=>props.onkeypress(event.target.value)}/>
         <datalist id="continentname">
         {continent}
         </datalist>
